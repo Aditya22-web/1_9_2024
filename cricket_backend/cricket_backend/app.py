@@ -12,7 +12,7 @@ app = FastAPI()
 # Enable CORS for the frontend URL
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "https://silly-mermaid-968230.netlify.app"],  # Allows requests from the frontend
+    allow_origins=["http://localhost:3000", "http://localhost:3001", "https://silly-mermaid-968230.netlify.app"],  # Allows requests from the frontend
     allow_credentials=True,
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
@@ -74,7 +74,12 @@ def select_best_players(pitch_type: str, player_names: list) -> list:
     model.fit(X_train, y_train)
 
     # Predict the best players
-    pitch_encoded = le.transform([pitch_type])[0]
+    if pitch_type == "unknown":
+        # Use a default value (e.g., the most common pitch type) when pitch_type is unknown
+        pitch_encoded = le.transform([player_data['PitchType'].mode()[0]])[0]
+    else:
+        pitch_encoded = le.transform([pitch_type])[0]
+
     player_features = np.array([[pitch_encoded] * len(player_names)]).T
     predictions = model.predict(player_features)
 

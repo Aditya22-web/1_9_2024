@@ -31,7 +31,7 @@ function App() {
 
   const handleSubmit = () => {
     const selectedPlayerNames = inputs.filter(input => input.trim() !== '');
-    fetch('https://cricket-selection-website-v4hwnn16.devinapps.com/analyze_pitch', {
+    fetch('http://127.0.0.1:8000/analyze_pitch', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
