@@ -8,7 +8,7 @@ function App() {
   const [pitchReport, setPitchReport] = useState('');
 
   useEffect(() => {
-    fetch('/home/ubuntu/attachments/PlayerNamess.txt')
+    fetch('/home/ubuntu/projects/1_9_2024/PlayerNames.csv')
       .then(response => response.text())
       .then(data => {
         const names = data.split('\n').map(name => name.trim()).filter(name => name);
@@ -53,15 +53,15 @@ function App() {
   return (
     <Box p={5}>
       <VStack spacing={4}>
-        {inputs.map((input, index) => (
+        {Array.from({ length: 22 }, (_, index) => (
           <Box key={index} position="relative" width="100%">
             <Input
-              value={input}
+              value={inputs[index]}
               onChange={(e) => handleInputChange(index, e.target.value)}
               placeholder={`Player ${index + 1}`}
             />
             {suggestions[index].length > 0 && (
-              <Box position="absolute" bg="white" border="1px" borderColor="gray.200" zIndex="1" width="100%">
+              <Box position="absolute" bg="white" border="1px" borderColor="gray.200" zIndex="1" width="100%" maxHeight="200px" overflowY="auto">
                 {suggestions[index].map((suggestion, sIndex) => (
                   <Box
                     key={sIndex}
